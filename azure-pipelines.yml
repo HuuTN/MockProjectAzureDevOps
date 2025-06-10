@@ -7,7 +7,7 @@ trigger:
 - main  # Pipeline sẽ tự động chạy khi có push lên nhánh main
 
 pool:
-  vmImage: 'ubuntu-latest' # Sử dụng máy ảo Ubuntu để build
+  vmImage: 'Default' # Sử dụng máy ảo Ubuntu để build
 
 steps:
 - task: Maven@3
