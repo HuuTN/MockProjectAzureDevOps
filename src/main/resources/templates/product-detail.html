@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Chi tiết Sản phẩm</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container-fluid">
+  <h1 class="my-4">Chi tiết Sản phẩm</h1>
+
+  <div class="card">
+    <div class="card-header">
+      <b>ID: [[${product.id}]]</b>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Tên sản phẩm: [[${product.name}]]</h5>
+      <p class="card-text">Giá: <b style="color: green;">$[[${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}]]</b></p>
+    </div>
+    <div class="card-footer">
+      <a th:href="@{/products-list}" class="btn btn-secondary">Quay lại danh sách</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
