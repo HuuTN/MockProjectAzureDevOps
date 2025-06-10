@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main  # Pipeline sẽ tự động chạy khi có push lên nhánh main
+
+pool:
+  vmImage: 'ubuntu-latest' # Sử dụng máy ảo Ubuntu để build
+
+steps:
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml' # Đường dẫn tới file pom.xml
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17' # Chọn phiên bản Java khớp với dự án
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package' # Lệnh của Maven: đóng gói thành file .jar
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: '<TÊN-AZURE-SERVICE-CONNECTION>' # Sẽ tạo ở bước tiếp theo
+    appType: 'webAppLinux' # Loại App Service là Linux
+    appName: 'webapp-[your-name]' # Tên App Service của bạn
+    package: '$(System.DefaultWorkingDirectory)/target/*.jar' # Đường dẫn tới file .jar sau khi build
+    runtimeStack: 'JAVA|17-java17' # Stack của App Service
