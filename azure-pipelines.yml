@@ -23,7 +23,7 @@ steps:
 
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: '<TÊN-AZURE-SERVICE-CONNECTION>' # Sẽ tạo ở bước tiếp theo
+    azureSubscription: 'AzureSubscriptionConnection' # Sẽ tạo ở bước tiếp theo
     appType: 'webAppLinux' # Loại App Service là Linux
     appName: 'webapp-[your-name]' # Tên App Service của bạn
     package: '$(System.DefaultWorkingDirectory)/target/*.jar' # Đường dẫn tới file .jar sau khi build
