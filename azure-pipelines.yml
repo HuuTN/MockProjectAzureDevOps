@@ -25,6 +25,6 @@ steps:
   inputs:
     azureSubscription: 'AzureSubscriptionConnection' # Sẽ tạo ở bước tiếp theo
     appType: 'webAppLinux' # Loại App Service là Linux
-    appName: 'webapp-[your-name]' # Tên App Service của bạn
+    appName: 'webapp-trungnc19huutn' # Tên App Service của bạn
     package: '$(System.DefaultWorkingDirectory)/target/*.jar' # Đường dẫn tới file .jar sau khi build
     runtimeStack: 'JAVA|17-java17' # Stack của App Service
