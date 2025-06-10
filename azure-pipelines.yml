@@ -6,25 +6,28 @@
 trigger:
 - main  # Pipeline sẽ tự động chạy khi có push lên nhánh main
 
-pool:
-  vmImage: 'Default' # Sử dụng máy ảo Ubuntu để build
+# --- SỬA Ở ĐÂY ---
+# Chỉ định sử dụng agent pool tên là 'Default' (self-hosted agent của bạn)
+pool: Default
 
 steps:
 - task: Maven@3
+  displayName: 'Build with Maven' # Thêm displayName để log dễ đọc hơn
   inputs:
-    mavenPomFile: 'pom.xml' # Đường dẫn tới file pom.xml
+    mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.17' # Chọn phiên bản Java khớp với dự án
+    jdkVersionOption: '1.17' # QUAN TRỌNG: Đảm bảo bạn đã cài JDK 17 trên máy tính chạy agent
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package' # Lệnh của Maven: đóng gói thành file .jar
+    goals: 'package'
 
 - task: AzureWebApp@1
+  displayName: 'Deploy to Azure App Service' # Thêm displayName
   inputs:
-    azureSubscription: 'AzureSubscriptionConnection' # Sẽ tạo ở bước tiếp theo
-    appType: 'webAppLinux' # Loại App Service là Linux
-    appName: 'webapp-trungnc19huutn' # Tên App Service của bạn
-    package: '$(System.DefaultWorkingDirectory)/target/*.jar' # Đường dẫn tới file .jar sau khi build
-    runtimeStack: 'JAVA|17-java17' # Stack của App Service
+    azureSubscription: 'AzureSubscriptionConnection'
+    appType: 'webAppLinux'
+    appName: 'webapp-trungnc19huutn'
+    package: '$(System.DefaultWorkingDirectory)/target/*.jar'
+    runtimeStack: 'JAVA|17-java17'
